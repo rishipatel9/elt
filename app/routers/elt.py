@@ -23,12 +23,16 @@ async def upload_files(payment_file: UploadFile = File(...), tax_file: UploadFil
         log_info(db, f"Files saved successfully: {payment_path}, {tax_path}")
 
         print("Files uploaded successfully.")
-        print("Files laoded successfully.")
         payment_df, tax_report_df = load_datasets(payment_path, tax_path)
+        print("Files laoded successfully.")
         merged_df = process_datasets(payment_df, tax_report_df)
+        print("Files merged successfully.")
         
-        # Insert merged data into the database
+        merged_df.to_csv("temp/merged_transactions.csv", index=False)
+        print("created merged file successfully.")
+        
         for _, row in merged_df.iterrows():
+            print(_, row)
             transaction = {
                 "order_id": row.get("Order ID"),
                 "transaction_type": row.get("Transaction Type"),
@@ -37,7 +41,9 @@ async def upload_files(payment_file: UploadFile = File(...), tax_file: UploadFil
                 "invoice_amount": row.get("Invoice Amount")
             }
             crud.create_transaction(db, transaction)
+        print("curd performed successfully.")
 
+        print("files uploaded and processed successfully..")
         log_info(db, "Files uploaded and processed successfully.")
         return {"status": "success"}
     
