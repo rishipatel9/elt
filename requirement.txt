@@ -4,4 +4,6 @@ pydantic
 pandas
 psycopg2-binary
 uvicorn
-
+json-log-formatter
+openpyxl
+python-doten
