@@ -8,9 +8,10 @@ class MergedTransaction(Base):
     order_id = Column(String, nullable=True, index=True)
     transaction_type = Column(String, nullable=False)
     payment_type = Column(String, nullable=True)
-    net_amount = Column(Float, nullable=True)
-    invoice_amount = Column(Float, nullable=True)
+    net_amount = Column(Float, nullable=True)  
+    invoice_amount = Column(Float, nullable=True) 
     timestamp = Column(DateTime, default=datetime.utcnow)
+
 
 class OrderSummary(Base):
     __tablename__ = "order_summary"
